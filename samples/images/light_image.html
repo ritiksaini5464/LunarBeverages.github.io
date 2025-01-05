@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <link rel="icon" href="demo_icon.gif" >
+
+        <script id="settings">
+            var SETTINGS = {
+                name: "Google",                                 // required
+                path_to_logo: "./images/light-logo.png",         // optional
+                path_to_favicon: "./images/light-favicon.png",   // optional
+                theme: "light"                                  // optional - values are "dark" and "light"
+            };
+        </script>
+        <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300|Roboto:100' rel='stylesheet' type='text/css'>
+        <style>
+            html {
+                font-family: "Source Sans Pro", sans-serif;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                border: none;
+                outline: none;
+            }
+
+            html, body {
+                width:100%;
+                height:100%;
+            }
+
+            #container {
+                display:block;
+                width:600px;
+            }
+
+            #header {
+                font-weight: 100;
+                text-align: center;
+                font-size: 10em;
+                font-family: "Roboto";
+                color:#000;
+            }
+
+            #logo {
+                display:block;
+                margin: 0 auto;
+                height:200px;
+            }
+
+            #byline {
+                text-align: center;
+                margin-top:10px;
+                font-size:2em;
+                font-weight: 300;
+                color:#000;
+            }
+
+            body.dark, #header #byline {
+                color:#fff;
+            }
+
+            body.dark {
+                background-color:#1b1b1b;
+            }
+
+            @media screen and (max-width: 600px) {
+                #container {
+                    width:90%;
+                    left:0 !important;
+                    margin-left:0 !important;
+                    padding: 0 5%;
+                }
+                #logo {
+                    width:90%;
+                    height:auto;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container">
+            <h1 id="header"></h1>
+            <img id="logo" />
+            <h2 id="byline">Coming Soon!</h2>
+        </div>
+
+        <script>
+            function verticalAlign(queryIdSelector) {
+                element = document.querySelector("#" + queryIdSelector);
+                var top = -1 * parseInt(element.clientHeight / 2);
+                var left = -1 * parseInt(element.clientWidth / 2);
+
+                element.setAttribute("style",
+                    "position: relative;" +
+                    "top: 50%;" +
+                    "left: 50%;" +
+                    "margin-top: " + top.toString() + "px;" + 
+                    "margin-left: " + left.toString() + "px;");
+
+                console.log(element.clientHeight);
+            }
+
+            if (SETTINGS.theme != undefined && SETTINGS.theme.toLowerCase() == "dark") {
+                document.querySelector("body").setAttribute("class", "dark")
+            }
+
+            document.querySelector("title").innerText = "Coming Soon - " + SETTINGS.name;
+
+            if (SETTINGS.path_to_favicon != undefined) {
+                document.querySelector("link").setAttribute("href", SETTINGS.path_to_favicon);
+            }
+
+            if (SETTINGS.path_to_logo != undefined) {
+                document.querySelector("#logo").src = SETTINGS.path_to_logo;
+                document.querySelector("#header").setAttribute("style", "display: none;");
+            }
+            else {
+                document.querySelector("#header").innerText = SETTINGS.name;
+                document.querySelector("#logo").setAttribute("style", "display:none;");
+            }
+
+            verticalAlign("container");
+
+            window.onresize += function () {
+                verticalAlign("container");
+            }
+        </script>
+    </body>
+</html>
